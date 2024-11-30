@@ -24,6 +24,7 @@ const userSchema = new Schema({
   rollno: { type: String, unique: true },
   email: { type: String, unique: true },
   password: String,
+  pin:String,
   address: String,
   privatekey: JSON
 });
@@ -360,20 +361,27 @@ app.post("/pay", async (req, res) => {
   console.log("Payment request received");
   
   try {
-    const { name1, name2, amount } = req.body;
+    const { name1, name2, amount, pin } = req.body;
+    
+    const user1 = await User.findOne({ fname: name1 });
+    const user2 = await User.findOne({ fname: name2 });
 
+
+  if (!user1 || !user2) {
+    return res.status(404).send("Sender or receiver not found");
+  }
+  const encryptedpin = user1.pin
+  console.log(encryptedpin)
+  console.log(pin)
+  const k = await bcrypt.compare(pin,encryptedpin)
+  console.log(k)
 
     if (!name1 || !name2 || !amount) {
       return res.status(400).send("Missing required fields");
     }
-
-
-    const user1 = await User.findOne({ fname: name1 });
-    const user2 = await User.findOne({ fname: name2 });
-
-    if (!user1 || !user2) {
-      return res.status(404).send("Sender or receiver not found");
-    }
+    if(!(k)){
+      return res.send("Incorrect pin")
+    }
 
     const from = user1.address;
     const to = user2.address;
@@ -456,15 +464,16 @@ app.post("/rp", async (req, res) => {
 
 app.post("/c", async (req, res) => {
   try {
-    const { password, rollno, ...userData } = req.body;
+    const { password, rollno,pin, ...userData } = req.body;
     userData.password = await bcrypt.hash(password, 10);
-
+    
     const existingUser = await User.findOne({ rollno });
-
-    if (!existingUser) {
+    if (!existingUser && pin.length==4) {
+      
       const newWallet = await web3.eth.accounts.create();
       const newUser = new User({ ...userData, rollno});
       newUser.address=newWallet['address'];
+      newUser.pin = await bcrypt.hash(pin,10);
       newUser.privatekey = await web3.eth.accounts.encrypt(newWallet['privateKey'],process.env.SALT);
       console.log(newUser);
       await newUser.save();
