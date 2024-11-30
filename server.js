@@ -29,7 +29,6 @@ const userSchema = new Schema({
 });
 const User = model("User", userSchema);
 
-// Database connection
 mongoose.connect(process.env.MONGO_URI, 
   {
   useNewUrlParser: true,
@@ -64,7 +63,6 @@ app.use(session({
 }));
 
 
-// Token authentication
 function tokenauth(req, res, next) {
   const token = req.session.accesstoken; 
   if (!token) {
@@ -83,7 +81,6 @@ function tokenauth(req, res, next) {
   });
 }
 
-// Create nodemailer transporter
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -92,7 +89,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Generate OTP function
 function otp_() {
   let otp = "";
   for (let i = 0; i < 6; i++) {
@@ -106,7 +102,6 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/login/login.html");
 });
 
-// Routes
 app.get("/cssl", (req, res) => {
   res.sendFile(__dirname + "/public/login/stylelogin.css");
 });
@@ -210,20 +205,95 @@ app.get("/logout", (req, res) => {
     res.redirect("/login"); 
   });
 });
+app.get("/search", async (req, res) => {
+  const query = req.query.q;
 
+  if (!query) {
+    return res.status(400).json({ message: "Query parameter 'q' is required" });
+  }
 
-// Handle QR code scanning
-app.post('/scan', (req, res) => {
-  const decodedAddress = req.body.deocdedadd;
+  try {
+    const results = await User.find(
+      { 
+        $or: [
+          { fname: { $regex: query, $options: "i" } },
+          { lname: { $regex: query, $options: "i" } },
+          { rollno: { $regex: query, $options: "i" } }
+        ]
+      },
+      { fname: 1, lname: 1, email: 1, rollno: 1, address: 1, _id: 0 }
+    ).limit(10);
 
-  if (decodedAddress) {
-      console.log(`Decoded Address: ${decodedAddress}`);
-      // Redirect to payment page with the decoded address
-      res.redirect(`/payment?receiver=${encodeURIComponent(decodedAddress)}`);
-  } else {
-      res.status(400).send('Invalid QR Code');
+    if (results.length === 0) {
+      return res.status(404).json({ message: "No matching records found" });
+    }
+
+    res.status(200).json(results);
+  } catch (err) {
+    console.error("Error during search:", err);
+    res.status(500).json({ error: "Error fetching search results", details: err.message });
   }
 });
+app.get("/user-details", tokenauth, async (req, res) => {
+  const { name, address } = req.query;
+
+  try {
+    let user;
+    
+    if (name) {
+      user = await User.findOne({ 
+        $or: [
+          { fname: name },
+          { lname: name },
+          { $expr: { $eq: [{ $concat: ["$fname", " ", "$lname"] }, name] } }
+        ]
+      });
+    }
+    
+    if (!user && address) {
+      user = await User.findOne({ address: address });
+    }
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({
+      fname: user.fname,
+      lname: user.lname,
+      fullName: `${user.fname} ${user.lname}`,
+      address: user.address,
+      rollno: user.rollno
+    });
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    res.status(500).json({ error: "Server error", details: error.message });
+  }
+});
+
+
+app.post('/scan', async (req, res) => {
+  const decodedAddress = req.body.deocdedadd;
+
+  try {
+    if (decodedAddress) {
+      const user = await User.findOne({ address: decodedAddress });
+      
+      if (user) {
+        console.log(`Decoded Address: ${decodedAddress}, User: ${user.fname}`);
+        res.redirect(`/payment?receiver=${encodeURIComponent(user.fname)}`);
+      } else {
+        res.status(404).send('User not found');
+      }
+    } else {
+      res.status(400).send('Invalid QR Code');
+    }
+  } catch (error) {
+    console.error('Error in /scan route:', error);
+    res.status(500).send('Server error');
+  }
+});
+
 
 app.get("/payment", tokenauth, async (req, res) => {
   try {
@@ -233,7 +303,22 @@ app.get("/payment", tokenauth, async (req, res) => {
       return res.status(404).send("User not found");
     }
 
-    const receiverName = req.query.receiver || '';
+    const receiverQuery = req.query.receiver || '';
+    let receiverName = '';
+    let receiverAddress = '';
+
+    const receiverUser = await User.findOne({
+      $or: [
+        { fname: receiverQuery },
+        { address: receiverQuery }
+      ]
+    });
+
+    if (receiverUser) {
+      receiverName = receiverUser.fname;
+      receiverAddress = receiverUser.address;
+    }
+
     const paymentHtml = await fs.promises.readFile(__dirname + "/public/home/payment.html", 'utf8');
     const modifiedHtml = paymentHtml
       .replace(
@@ -242,10 +327,9 @@ app.get("/payment", tokenauth, async (req, res) => {
       )
       .replace(
         '<input name="name2" type="input" id="receiver" placeholder="Enter receiver\'s name" required>',
-        `<input name="name2" type="input" id="receiver" value="${receiverName}" placeholder="Enter receiver's name" required>`
+        `<input name="name2" type="input" id="receiver" value="${receiverName}" data-address="${receiverAddress}" placeholder="Enter receiver's name" required>`
       );
 
-    // Send the modified HTML
     res.send(modifiedHtml);
   } catch (error) {
     console.error('Error in /payment route:', error);
@@ -348,7 +432,6 @@ app.post("/", async (req, res) => {
   }
 });
 
-// Reset password route
 app.post("/rp", async (req, res) => {
   try {
     if (req.body.new_pass1 === req.body.new_pass2) {
@@ -371,7 +454,6 @@ app.post("/rp", async (req, res) => {
   }
 });
 
-// Create new user route
 app.post("/c", async (req, res) => {
   try {
     const { password, rollno, ...userData } = req.body;
@@ -396,7 +478,6 @@ app.post("/c", async (req, res) => {
   }
 });
 
-// Send OTP route
 app.post("/sendotp", async (req, res) => {
   try {
     const email = req.body.email;
@@ -429,7 +510,6 @@ app.post("/sendotp", async (req, res) => {
   }
 });
 
-// Verify OTP route
 app.post("/reset", (req, res) => {
   if (req.body.otp === otp) {
     res.sendFile(__dirname + "/public/login/reset.html");
@@ -443,7 +523,6 @@ app.get("/forgotpass", (req, res) => {
   res.sendFile(__dirname + "/public/login/forgot.html");
 });
 
-// Start the server
 app.listen(port, (err) => {
   if (err) {
     console.error(err);
@@ -474,7 +553,6 @@ async function getbalance(x){
   return balance
 }  
 
-// Route to get user data
 app.get('/user', tokenauth, async (req, res) => {
   try {
     const user = await User.findOne({ email: req.email });
@@ -545,56 +623,7 @@ app.get('/user', tokenauth, async (req, res) => {
 
 app.use(express.static('public')); 
 
-// Remove the duplicate search route and keep only one
-app.get("/search", async (req, res) => {
-  const query = req.query.q;
-
-  if (!query) {
-    return res.status(400).json({ message: "Query parameter 'q' is required" });
-  }
-
-  try {
-    const results = await User.find(
-      { fname: { $regex: query, $options: "i" } },
-      { fname: 1, lname: 1, email: 1, rollno: 1, _id: 0 }
-    ).limit(10);
-
-    if (results.length === 0) {
-      return res.status(404).json({ message: "No matching records found" });
-    }
-
-    res.status(200).json(results);
-  } catch (err) {
-    console.error("Error during search:", err);
-    res.status(500).json({ error: "Error fetching search results", details: err.message });
-  }
-});
 
 app.get("/search.js", (req, res) => {
   res.sendFile(__dirname + "/public/home/search.js");
-});
-
-
-
-app.get("/search", async (req, res) => {
-  const query = req.query.q;
-
-  if (!query) {
-    return res.status(400).json({ message: "Query parameter 'q' is required" });
-  }
-  try {
-    const results = await User.find(
-      { fname: { $regex: query, $options: "i" } }, 
-      { fname: 1, lname: 1, email: 1, rollno: 1, _id: 0 } 
-    );
-
-    if (results.length === 0) {
-      return res.status(404).json({ message: "No matching records found" });
-    }
-
-    res.status(200).json(results);
-  } catch (err) {
-    console.error("Error during search:", err);
-    res.status(500).json({ error: "Error fetching search results", details: err.message });
-  }
 });
