@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Login</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="/cssfp">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="background">
+            <div class="wrapper">
+                <div><h1 class="login">Verification</h1></div>
+
+                <form action="/sendotp" method="POST" id="otpForm">
+                    <div class="input-box">
+                        <input type="textbox" id="field1" placeholder="Enter email" required name="email" class="inp">
+                        <span class="material-symbols-outlined">
+                            mail
+                        </span>
+                    </div>
+                    <button class="btn1" type="submit" id="otpButton">Send OTP</button>
+                </form>
+
+                <form action="/reset" method="POST" id="resetForm">
+                    <div class="input-box">
+                        <input type="textbox" id="field2" placeholder="Enter OTP" required name="otp" class="inp">
+                        <span class="material-symbols-outlined">
+                            123
+                        </span>
+                    </div>
+                    <button class="btn" type="submit" id="submitButton">Submit</button>
+                </form>
+                <p id="al"></p>
+            </div>   
+        </div>  
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const otpForm = document.getElementById('otpForm');
+                const resetForm = document.getElementById('resetForm');
+                const otpButton = document.getElementById('otpButton');
+                const submitButton = document.getElementById('submitButton');
+                const field1 = document.getElementById('field1');
+                const field2 = document.getElementById('field2');
+
+                otpForm.addEventListener('input', function() {
+                    if (field1.value.trim() !== '') {
+                        otpButton.classList.add('typed1');
+                    } else {
+                        otpButton.classList.remove('typed1');
+                    } 
+                });
+
+                resetForm.addEventListener('input', function() {
+                    if (field2.value.trim() !== '') {
+                        submitButton.classList.add('typed');
+                    } else {
+                        submitButton.classList.remove('typed');
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

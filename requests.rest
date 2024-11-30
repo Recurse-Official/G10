@@ -1,0 +1,5 @@
+GET http://localhost:3000/website
+Authorization: 4933abc7712a08159c1b2f5d5282f45ff48748a8a1cfbd7ff0771f4d9b8f74ca4461115f4041be0f84f6e25df000f480aa445780420b2fe95d02b9388966cd29
+####
+
+POST http://localhost:3000/login

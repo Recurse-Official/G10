@@ -1,0 +1,117 @@
+.roboto-light {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+.roboto-thin {
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+  }
+* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    background: url(back.jpg) no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.wrapper{
+    border-radius: 15px;
+    background-color: transparent;
+    border:2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(30px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    height:400px;
+    width:500px;
+    margin:auto;
+    margin-top:55px;
+    text-align:center;
+    vertical-align: middle;
+    padding:10px;
+ }
+
+ .wrapper h1{
+    font-size: 36px;
+    font-weight: 350;
+    padding:15px;
+    text-align:left;
+    font-family: 'Roboto', sans-serif;
+    color: black;
+ }
+
+.wrapper .input-box{
+    position: relative;
+    width: 80%;
+    height: 50px;
+    border-radius: 10px;
+    margin: 20px 50px;
+}
+
+.input-box input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid black;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 20px 45px 23px 20px;
+    color: black;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+}
+
+.input-box input::placeholder {
+    color: black;
+    font-weight: 400;
+}
+
+.input-box span{
+    position:absolute;
+    right: 17px;
+    bottom: 15px;
+    font-size: 20px;
+    color: black;
+}
+
+.wrapper .btn, .wrapper .btn1{
+    position:relative;
+    width: 50%;
+    height: 45px;
+    background: #bfbfbf;
+    border: none;
+    outline:none;
+    top: -5px;
+    border-radius: 40px;
+    cursor: not-allowed;
+    font-size: 16px;
+    color: rgb(64, 64, 64);
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.wrapper .btn:active, .wrapper .btn1:active{
+    background-color: #bfbfbf;
+    color: rgb(64, 64, 64);
+}
+
+.wrapper .btn.typed, .wrapper .btn1.typed1{
+    background-color: #2ab8ff;
+    color: black;
+    cursor: pointer;
+}
+
+.wrapper .btn.typed:active, .wrapper .btn1.typed1:active{
+    background-color: #2780ad;
+    color: rgb(214, 214, 214);
+}
