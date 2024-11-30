@@ -15,6 +15,13 @@
 
 The KMIT_Token is an ERC-20 token built on the Ethereum blockchain. ERC-20 is a widely adopted standard that defines a set of rules for creating and managing fungible tokens. This contract implements the ERC20 standard using the OpenZeppelin library, ensuring security and compatibility with Ethereum-based applications.
 
+![image alt](https://github.com/Recurse-Official/G10/blob/9816353b571f1c074ec4a2f142461a3d961ae07f/crypto%20network%20chain.png)
+
+
+
+
+
+
 The KMIT_Token has the following key properties:
 
 Name: KMIT
