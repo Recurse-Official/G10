@@ -1,0 +1,71 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Dependency directories
+jspm_packages/
+
+# Build directories
+dist/
+build/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE and editor folders
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln
+*.sw?
+*.vscode/
+
+# Mac system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+
+# Package lock files
+package-lock.json
+yarn.lock
+
+# IDE-specific files
+*.iml
+.idea/
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Build output
+dist/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Logs and error reports
+*.log
+
+# Other system files
+*.bak
+*.swp
+*.swo
+*.swn
+
+# npm package
+node_modules/
+node_modules
