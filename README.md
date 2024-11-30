@@ -1,7 +1,17 @@
 # G10
 "Seamless Token Transactions across the college" Revolutionizing Digital Exchanges
+
+
+
+
+
+
+
 ![image alt](https://github.com/Recurse-Official/G10/blob/cc72cd7715ed8ee661d582eee93b8048db12ccd6/home/homepage_screenshot.png)
-			
+
+
+
+   
 
 The KMIT_Token is an ERC-20 token built on the Ethereum blockchain. ERC-20 is a widely adopted standard that defines a set of rules for creating and managing fungible tokens. This contract implements the ERC20 standard using the OpenZeppelin library, ensuring security and compatibility with Ethereum-based applications.
 
