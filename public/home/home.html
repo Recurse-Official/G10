@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home Page</title>  
+  <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+  <link rel="stylesheet"  href="/homecss">
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<body>
+  
+<div class="sidebar">
+  <a href="/home" class="logo">
+      <i class='bx bx-code-alt'></i>
+      <div class="logo-name"><span>CampusCurrency</div>
+  </a>
+  <ul class="side-menu">
+      <li><a href="/home"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
+      <li>
+          <a href="/profile">
+    <i class='bx bx-user-circle'></i>
+              <span class="text">Profile</span>
+          </a>
+      </li>
+      <li>
+          <a href="/connections">
+              <i class='bx bxs-doughnut-chart' ></i>
+              <span class="text">Transactions</span>
+          </a>
+      </li>
+  </ul>
+  <ul class="side-menu">
+    <li>
+        <a href="/logout" class="logout">
+          <i class='bx bx-power-off' ></i>
+            <span class="text">Logout</span>
+        </a>
+    </li>
+  </ul>
+</div>
+
+<div class="content">
+  <nav>
+      <i class='bx bx-menu'></i>
+
+      <form action="#" style="position: relative;">
+    <div class="form-input">
+        <input type="search" id="searchInput" placeholder="Search...">
+        <button class="search-btn" type="submit" id="searchButton">
+            <i class='bx bx-search'></i>
+        </button>
+        <div class="results-container">
+            <ul id="results"></ul>
+        </div>
+    </div>
+</form>
+
+      <a href="/connections" class="notif">
+          <i class='bx bx-bell'></i>
+      </a>
+      <a href="/profile" class="profile">
+          <img src="images/logo.png">
+      </a>
+  </nav>
+
+
+  <main>
+      <div class="header">
+          <div class="left">
+            <h1>
+                <p><li></i>Welcome
+                <a href="/profile"><span id="fname">Loading...</span> <span id="lname"></span></a>!</p>
+              </li></h1>
+                      <ul class="breadcrumb">
+                          <li>
+                              <a href="#">Dashboard</a>
+                          </li>
+                          <li><i class='bx bx-chevron-right' ></i></li>
+                          <li>
+                              <a class="active" href="/home">Home</a>
+                          </li>
+                      </ul>
+          </div>
+      </div>
+
+      <ul class="insights">
+          <li>
+            <i class='bx bx-receipt'></i>
+            <span class="text">
+                <h3>Balance</h3>
+                <p id="balance">1</p>
+            </span>
+          </li>
+          <li><i class='bx bx-transfer'></i>
+            <span class="text">
+                <h3>Transactions</h3>
+                <p id="totaltransactions">1</p>
+            </span>
+          </li>
+
+          <li>
+            <a href="/payment" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
+              <i class='bx bxs-dollar-circle'></i>
+              <span class="text">
+                <h3>Pay</h3>
+                <p>Make Payment</p>
+              </span>
+            </a>
+          </li>
+          
+          
+      </ul>
+
+      <div class="bottom-data">
+          <div class="orders">
+              <div class="header">
+                  <i class='bx bx-receipt'></i>
+                  <h3>Recent Transactions</h3>
+                  <i class='bx bx-filter'></i>
+                  <i class='bx bx-search'></i>
+              </div>
+              <table>
+                  <thead>
+                      <tr>
+                          <th>From</th>
+                          <th>To</th>
+                          <th>Date</th>
+                          <th>Time</th>
+                          <th>Tokens</th>
+                      </tr>
+                  </thead>
+                  <tbody id="table">
+                  </tbody>
+              </table>
+          </div>
+
+
+      </div>
+
+  </main>
+
+</div>
+
+   
+
+
+    
+	<script src="script.js"></script>
+    <script src="/search.js"></script>
+
+  <script>
+    
+    fetch('/user')
+      .then(response => response.json())
+      .then(data => {
+        $(document).ready(function(){
+        
+        document.getElementById('fname').innerText = data.fname;
+        document.getElementById('lname').innerText = data.lname;
+        num = data.balance;
+        num = Math.round(num*1000)/1000;
+        document.getElementById('balance').innerText = num+" KMIT";
+		let table = document.getElementById('table');
+		let t = data.transaction;
+		document.getElementById('totaltransactions').innerText= t.length;
+		for(var i=0;i<=3;i++){
+	        const node = document.createElement('tr');
+			const node1 = document.createElement('td');
+			const node2 = document.createElement('td');
+			const node3 = document.createElement('td');
+            const node4 = document.createElement('td');
+            const node5 = document.createElement('td');
+            var textnode = document.createTextNode(t[i]['from'])
+            node1.appendChild(textnode);
+            var textnode = document.createTextNode(t[i]['to'])
+            node2.appendChild(textnode);
+            textnode = document.createTextNode(t[i]['date'])
+            node3.appendChild(textnode);
+            textnode = document.createTextNode(t[i]['value'])
+            node4.appendChild(textnode);
+            textnode = document.createTextNode(t[i]['time'])
+            node5.appendChild(textnode);
+			node.appendChild(node1)
+			node.appendChild(node2)
+			node.appendChild(node3)
+            node.appendChild(node5)
+            node.appendChild(node4)
+			table.appendChild(node);
+        }
+        });
+      })
+      .catch(error => {
+        console.error( error);
+      });
+    
+
+
+
+      
+  </script>
+
+
+
+  </body>
+</html>
