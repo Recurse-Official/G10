@@ -12,12 +12,13 @@
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="toggle-sidebar.js"></script>
 
 </head>
 <body>
   
-<div class="sidebar">
-  <a href="/home" class="logo">
+<div id="mySidebar" class="sidebar collapsed" onclick="toggleSidebar()">
+    <a href="/home" class="logo">
       <i class='bx bx-code-alt'></i>
       <div class="logo-name"><span>CampusCurrency</div>
   </a>
@@ -62,7 +63,12 @@
 </form>
       <a href="/connections" class="notif">
           <i class='bx bx-bell'></i>
-      </a>
+      </a>      
+      <a href="/qr-scanner">
+        <button  id="scanQrBtn" class="qr-btn">
+            <i class='bx bx-qr-scan'></i> Scan QR
+        </button>
+        </a>
       <a href="/profile" class="profile">
           <img src="images/logo.png">
       </a>
@@ -179,6 +185,7 @@
 			node.appendChild(node2)
 			node.appendChild(node3)
             node.appendChild(node4)
+            node.appendChild(node5)
 			table.appendChild(node);
         }
         });
@@ -193,9 +200,18 @@
       
   </script>
        
-    </script>
-
-
-
+<script>
+    document.getElementById('scanQrBtn').addEventListener('click', function () {
+  
+        window.addEventListener('message', function (event) {
+            if (event.origin === window.location.origin) {
+                const receiverName = event.data.receiverName; 
+                if (receiverName) {
+                    window.location.href = `/payment?receiver=${encodeURIComponent(receiverName)}`;
+                }
+            }
+        });
+    });
+  </script>
   </body>
 </html>

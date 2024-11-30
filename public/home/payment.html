@@ -7,12 +7,17 @@
   <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
   <link rel="stylesheet"  href="/homecss">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="toggle-sidebar.js"></script>
 </head>
 <body>
 
-<div class="sidebar">
-  <a href="/home" class="logo">
+    <div id="mySidebar" class="sidebar collapsed" onclick="toggleSidebar()">
+        <a href="/home" class="logo">
       <i class='bx bx-code-alt'></i>
       <div class="logo-name"><span>CampusCurrency</div>
   </a>
@@ -41,8 +46,8 @@
   </ul>
 </div>
 
-<div class="content">
-  <nav>
+<div class="content sidebar-collapsed">
+    <nav>
       <i class='bx bx-menu'></i>
       <form action="#" style="position: relative;">
         <div class="form-input">
@@ -58,6 +63,11 @@
       <a href="/connections" class="notif">
           <i class='bx bx-bell'></i>
       </a>
+      <a href="/qr-scanner">
+        <button  id="scanQrBtn" class="qr-btn">
+            <i class='bx bx-qr-scan'></i> Scan QR
+        </button>
+        </a>
       <a href="/profile" class="profile">
           <img src="images/logo.png">
       </a>
@@ -119,6 +129,23 @@
         });
     });
     </script>
+
+    
+<script>
+    document.getElementById('scanQrBtn').addEventListener('click', function () {
+  
+        window.addEventListener('message', function (event) {
+            if (event.origin === window.location.origin) {
+                const receiverName = event.data.receiverName; 
+                if (receiverName) {
+                    window.location.href = `/payment?receiver=${encodeURIComponent(receiverName)}`;
+                }
+            }
+        });
+    });
+  </script>
+
+
 
   </body>
 </html>

@@ -1,21 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const sidebar = document.querySelector('.sidebar');
-    const content = document.querySelector('.content');
+    // Select all potential sidebars and contents
+    const sidebars = document.querySelectorAll('.sidebar');
+    const contents = document.querySelectorAll('.content');
 
-    if (sidebar && content) {
-        // Start with sidebar collapsed
+    sidebars.forEach(sidebar => {
         sidebar.classList.add('collapsed');
-        content.classList.add('sidebar-collapsed');
-
-        // Hover expand logic
+        
         sidebar.addEventListener('mouseenter', () => {
             sidebar.classList.remove('collapsed');
-            content.classList.remove('sidebar-collapsed');
+            // Find corresponding content for this sidebar
+            const correspondingContent = document.querySelector('.content');
+            if (correspondingContent) {
+                correspondingContent.classList.remove('sidebar-collapsed');
+            }
         });
 
         sidebar.addEventListener('mouseleave', () => {
             sidebar.classList.add('collapsed');
-            content.classList.add('sidebar-collapsed');
+            // Find corresponding content for this sidebar
+            const correspondingContent = document.querySelector('.content');
+            if (correspondingContent) {
+                correspondingContent.classList.add('sidebar-collapsed');
+            }
         });
-    }
+    });
 });
