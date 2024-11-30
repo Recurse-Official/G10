@@ -627,3 +627,10 @@ app.use(express.static('public'));
 app.get("/search.js", (req, res) => {
   res.sendFile(__dirname + "/public/home/search.js");
 });
+
+app.use((req, res, next) => {
+  if (req.url.endsWith('.js')) {
+      res.type('application/javascript');
+  }
+  next();
+});

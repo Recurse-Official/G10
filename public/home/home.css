@@ -756,3 +756,29 @@ body {
 .qr-btn:hover {
     background-color: #45a049;
 }
+
+.sidebar {
+    width: 200px; /* Default expanded width */
+    transition: width 0.3s ease;
+    overflow: hidden;
+}
+
+.sidebar.collapsed {
+    width: 85px; /* Collapsed width */
+}
+
+.sidebar.collapsed .logo-name,
+.sidebar.collapsed a .icon-text {
+    opacity: 0;
+    width: 0;
+    transition: opacity 0.3s ease, width 0.3s ease;
+}
+
+.content {
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.content.sidebar-collapsed {
+    width: calc(100% - 85px);
+    left: 85px;
+}
