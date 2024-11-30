@@ -1,7 +1,33 @@
 # G10
 "Seamless Token Transactions across the college" Revolutionizing Digital Exchanges
 
+1. Project Overview
+The Campus Token exchange is a web platform designed to issue and manage custom tokens for students, across the campus These tokens can be used for various campus-related activities such as access control, reward systems, event management, and more.
 
+2. Features
+Token Creation:
+
+Generate unique digital tokens for students,
+Customize tokens based on purpose (e.g., access pass, event tickets, rewards).
+
+3. Student Integration:
+
+Register and manage student profiles,
+Link tokens to individual students,
+Token Management:
+
+Issue, revoke, or transfer tokens,
+Monitor token usage and validity,
+
+4. Admin Dashboard:
+
+Oversee all token-related activities,
+Generate reports on token distribution and utilization,
+
+5. Secure Platform:
+
+Data encryption and authentication mechanisms,
+Blockchain or database-based token storage.
 
 
 
@@ -11,7 +37,27 @@
 
 
 
-   
+
+
+
+Technologies Used
+Frontend:
+
+HTML5, CSS3, JavaScript.
+Frameworks: React.js, Vue.js, or Angular (optional).
+Backend:
+
+Node.js with Express.js or Django/Flask for Python.
+Blockchain integration for token immutability (e.g., Ethereum, Solana).
+Database:
+
+Relational database (e.g., MySQL, PostgreSQL) for student and token data.
+Non-relational database (e.g., MongoDB) for real-time token logs.
+Authentication:
+
+OAuth 2.0, JWT (JSON Web Tokens).  
+
+KMIT_token INFO
 
 The KMIT_Token is an ERC-20 token built on the Ethereum blockchain. ERC-20 is a widely adopted standard that defines a set of rules for creating and managing fungible tokens. This contract implements the ERC20 standard using the OpenZeppelin library, ensuring security and compatibility with Ethereum-based applications.
 
