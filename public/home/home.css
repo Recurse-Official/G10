@@ -758,13 +758,13 @@ body {
 }
 
 .sidebar {
-    width: 200px; /* Default expanded width */
+    width: 26vw; 
     transition: width 0.3s ease;
     overflow: hidden;
 }
 
 .sidebar.collapsed {
-    width: 85px; /* Collapsed width */
+    width: 4vw;
 }
 
 .sidebar.collapsed .logo-name,
@@ -779,6 +779,6 @@ body {
 }
 
 .content.sidebar-collapsed {
-    width: calc(100% - 85px);
-    left: 85px;
+    width: calc(100% - 4vw);
+    left: 4vw;
 }
