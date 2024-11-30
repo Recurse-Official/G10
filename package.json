@@ -1,0 +1,39 @@
+{
+  "name": "community-page",
+  "version": "1.0.0",
+  "main": "website.js",
+  "type": "module",
+  "scripts": {
+    "devStart": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@moralisweb3/common-evm-utils": "^2.27.2",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "browserify": "^17.0.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "erc-20-abi": "^1.0.1",
+    "express": "^4.21.1",
+    "express-session": "^1.18.1",
+    "firebase": "^10.12.5",
+    "jquery": "^3.7.1",
+    "jsdom": "^24.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.11.0",
+    "mongoose": "^8.4.5",
+    "moralis": "^2.27.2",
+    "nodemailer": "^6.9.14",
+    "sessionstorage-for-nodejs": "^1.0.2",
+    "web3": "^4.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "description": ""
+}
