@@ -204,6 +204,18 @@
   </script>
 
 <script>
+    
+    li.addEventListener("click", function () {
+    const receiverInput = document.getElementById("receiver");
+    if (receiverInput) {
+        receiverInput.value = user.fname;
+        receiverInput.setAttribute("data-address", user.address);
+        receiverInput.setAttribute("data-selected", "true");
+    }
+    
+    window.location.href = `/payment?receiver=${encodeURIComponent(user.fname)}`;
+});
+
     document.getElementById('scanQrBtn').addEventListener('click', function () {
   
         window.addEventListener('message', function (event) {
@@ -215,6 +227,8 @@
             }
         });
     });
+
+
   </script>
 
 
