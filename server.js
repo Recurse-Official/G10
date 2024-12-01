@@ -424,15 +424,13 @@ app.post("/", async (req, res) => {
         { email: req.body.email },
         process.env.ACCESS_TOKEN_SECRET
       );
-
-
       req.session.accesstoken = token;
       req.session.email = req.body.email;
 
       res.sendFile(__dirname + "/public/home/home.html");
       console.log("Token and email stored in session");
     } else {
-      res.status(401).send("Invalid email or password");
+      res.status(401)
     }
   } catch (error) {
     console.error(error);

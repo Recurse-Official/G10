@@ -48,29 +48,33 @@
                                 mail
                             </span>
                         </div>
-
+                        <div id="errorMessage" style="color:Red;"></div>
+                        <br>
                         <div class="input-box">
-                            <input name="password" type="textbox" placeholder="Enter password" required>
+                            <input id="pass" name="password" type="textbox" placeholder="Enter password" required>
                             <span class="material-symbols-outlined">
                                 pin
                             </span>
                         </div>
 
                         <div class="input-box">
-                            <input type="password" placeholder="Retype password" required>
+                            <input id="pass2" type="password" placeholder="Retype password" required>
                             <span class="material-symbols-outlined">
                                 key
                             </span>
                         </div>
+                   
+                        <div id="errorMessage2" style="color:Red;"></div>
+                        <br>
                         <div class="input-box">
-                            <input name="pin" type="textbox" placeholder="Enter pin" required>
+                            <input id="pin" name="pin" type="textbox" placeholder="Enter pin" required>
                             <span class="material-symbols-outlined">
                                 pin
                             </span>
                         </div>
 
                         <div class="input-box">
-                            <input type="password" placeholder="Retype pin" required>
+                            <input id="pin2" type="password" placeholder="Retype pin" required>
                             <span class="material-symbols-outlined">
                                 key
                             </span>
@@ -80,6 +84,7 @@
                     <div>
                         <button class="btn" type="submit" id="submitButton">Submit</button>
                     </div>
+                </div>
                 </form>      
             </div>  
         </div>
@@ -93,19 +98,49 @@
 
             })
 
+            var pass = document.getElementById('pass')
+            var pass2 = document.getElementById('pass2')
+            var pin = document.getElementById('pin')
+            var pin2 = document.getElementById('pin2')
+            var errorMessage = document.getElementById('errorMessage')
+            var errorMessage2 = document.getElementById('errorMessage2')
+            pass2.addEventListener("input", (event)=>{
+                var input = event.target.value;
+                if(input!=pass.value){
+                    errorMessage.textContent="Passwords doesnt match"
+                }
+                else{
+                    errorMessage.textContent="";
+                }
+            });
+            pin2.addEventListener("input", (event)=>{
+                var input = event.target.value;
+                if(input!=pin.value){
+                    errorMessage2.textContent="Pins doesnt match"
+                }
+                else if(input.length>4 || pin.value>4){
+                    errorMessage2.textContent="Pin length must be 4"
+                }
+                else{
+                    errorMessage2.textContent="";
+                }
+            });
             document.addEventListener('DOMContentLoaded', function() {
                 const form = document.getElementById('form');
                 const submitButton = document.getElementById('submitButton');
 
                 form.addEventListener('input', function() {
                     const allFieldsFilled = [...form.querySelectorAll('input')].every(input => input.value.trim() !== '');
-                    if (allFieldsFilled) {
+                    if (allFieldsFilled && errorMessage.textContent=="" && errorMessage2.textContent=="") {
                         submitButton.classList.add('typed');
+                
                     } else {
                         submitButton.classList.remove('typed');
                     }
                 });
             });
+
+
         </script>
     </body>
 </html>

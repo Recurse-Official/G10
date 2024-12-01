@@ -39,7 +39,7 @@
                         <a href="/forgotpass">Forgot password</a>
                     </div>
 
-                    <div class ="errorMessage" id="error-message" style="color: red; display: none;">Invalid email or password</div>
+                    <div id="errorMessage" style="color: red;"></div>
 
                     <button type="submit" class="btn" id="submitButton">Continue</button>
                     
@@ -61,7 +61,7 @@
             document.addEventListener('DOMContentLoaded', function() {
                 const form = document.getElementById('form');
                 const submitButton = document.getElementById('submitButton');
-                const errorMessage = document.getElementById('error-message');
+                var errorMessage = document.getElementById('errorMessage');
         
                 form.addEventListener('submit', async function(event) {
                     event.preventDefault(); 
@@ -80,18 +80,27 @@
                             },
                             body: JSON.stringify(data),
                         });
-        
+                        console.log(response['status'])
+                        if(response['status']==401){
+                            console.log("invalid pass")
+                            errorMessage.textContent = "Invalid email or password"
+                        }
                         if (!response.ok) {
                             const result = await response.json();
                             if (result.error) {
                                 errorMessage.textContent = result.error; 
-                                errorMessage.style.display = 'block'; 
+                              
                             }
-                        } else {
+                            else{
+                                errorMessage.textContent = "mmmm";
+                            }
+                        }
+                        
+                        else {
                             window.location.href = '/home'; 
                         }
                     } catch (error) {
-                        console.error('Error:', error);
+                        console.log(error);
                     }
                 });
         
