@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 li.textContent = `${user.fname} ${user.lname} (${user.rollno})`;
                 
                 li.addEventListener("click", function () {
+                   
                     const receiverInput = document.getElementById('receiver');
                     if (receiverInput) {
                         receiverInput.value = user.fname;
@@ -50,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         receiverInput.setAttribute('data-selected', 'true');
                     }
                     
-                    window.location.href = '/payment';
                     
                     resultsContainer.classList.remove("show");
                 });
