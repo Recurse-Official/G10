@@ -495,7 +495,6 @@ body {
     top: 250%;
     left: 50%;
     transform: translate(-50%, -50%);
-    margin-top: -10%;
 }
 
 .payment-form {
