@@ -211,18 +211,6 @@ body{
     cursor: pointer;
 }
 
-.content nav .notif{
-    font-size: 20px;
-    position: relative;
-}
-
-.content nav .profile img{
-    width: 36px;
-    height: 36px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
 .content main{
     width: 100%;
     padding: 36px 24px;
@@ -482,6 +470,12 @@ body{
         min-width: 340px;
     }
 
+    .content nav .qr{
+        max-width: 400px;
+        width: 100%;
+        margin-right: auto;
+        margin-left: -12vw;
+    }
 }
 
 
@@ -600,6 +594,7 @@ body {
     align-items: center;
     font-size: 14px;
     transition: 0.3s ease;
+    margin-right: 30px;
 }
 
 .qr-btn i {
@@ -635,4 +630,8 @@ body {
 .content.sidebar-collapsed {
     width: calc(100% - 50px);
     left: 50px;
+}
+
+.content.sidebar-collapsed .qr-btn {
+    margin-right: 30px;
 }
