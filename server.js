@@ -63,21 +63,19 @@ app.use(session({
   cookie: { secure: false }
 }));
 
+web3.eth.transactionBlockTimeout=100;
 
 function tokenauth(req, res, next) {
   const token = req.session.accesstoken; 
   if (!token) {
-    console.log("No access token found, redirecting to login...");
     return res.redirect("/login/login.html"); 
   }
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) {
-      console.error("Invalid token:", err);
       return res.redirect("/login"); 
     }
     req.email = decoded.email;
-    console.log("Token verified, email:", req.email);
     next();
   });
 }
@@ -208,11 +206,9 @@ app.get("/logout", (req, res) => {
 });
 app.get("/search", async (req, res) => {
   const query = req.query.q;
-
   if (!query) {
     return res.status(400).json({ message: "Query parameter 'q' is required" });
   }
-
   try {
     const results = await User.find(
       { 
@@ -224,23 +220,21 @@ app.get("/search", async (req, res) => {
       },
       { fname: 1, lname: 1, email: 1, rollno: 1, address: 1, _id: 0 }
     ).limit(10);
-
     if (results.length === 0) {
       return res.status(404).json({ message: "No matching records found" });
     }
-
     res.status(200).json(results);
   } catch (err) {
     console.error("Error during search:", err);
     res.status(500).json({ error: "Error fetching search results", details: err.message });
   }
 });
+
 app.get("/user-details", tokenauth, async (req, res) => {
   const { name, address } = req.query;
 
   try {
-    let user;
-    
+    let user;  
     if (name) {
       user = await User.findOne({ 
         $or: [
@@ -249,8 +243,7 @@ app.get("/user-details", tokenauth, async (req, res) => {
           { $expr: { $eq: [{ $concat: ["$fname", " ", "$lname"] }, name] } }
         ]
       });
-    }
-    
+    }  
     if (!user && address) {
       user = await User.findOne({ address: address });
     }
@@ -258,7 +251,6 @@ app.get("/user-details", tokenauth, async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     res.json({
       fname: user.fname,
       lname: user.lname,
@@ -275,11 +267,9 @@ app.get("/user-details", tokenauth, async (req, res) => {
 
 app.post('/scan', async (req, res) => {
   const decodedAddress = req.body.deocdedadd;
-
   try {
     if (decodedAddress) {
-      const user = await User.findOne({ address: decodedAddress });
-      
+      const user = await User.findOne({ address: decodedAddress });   
       if (user) {
         console.log(`Decoded Address: ${decodedAddress}, User: ${user.fname}`);
         res.redirect(`/payment?receiver=${encodeURIComponent(user.fname)}`);
@@ -299,11 +289,9 @@ app.post('/scan', async (req, res) => {
 app.get("/payment", tokenauth, async (req, res) => {
   try {
     const currentUser = await User.findOne({ email: req.email });
-
     if (!currentUser) {
       return res.status(404).send("User not found");
     }
-
     const receiverQuery = req.query.receiver || '';
     let receiverName = '';
     let receiverAddress = '';
@@ -332,7 +320,8 @@ app.get("/payment", tokenauth, async (req, res) => {
       );
 
     res.send(modifiedHtml);
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Error in /payment route:', error);
     res.status(500).send('Server error');
   }
@@ -391,13 +380,8 @@ app.post("/pay", async (req, res) => {
     if (!from || !to || !privatekey) {
       return res.status(400).send("Invalid user details");
     }
-
     console.log(`Initiating transaction from ${from} to ${to} with amount: ${amount}`);
-
-
     const receipt = await sendTransaction(amount, from, to, privatekey);
-
-
     const status = parseInt(receipt['status']);
     if (status === 1) {
       console.log(`Transaction successful: ${receipt.transactionHash}`);
@@ -601,9 +585,6 @@ app.get('/user', tokenauth, async (req, res) => {
           value = web3.utils.fromWei(t[i]['value'],'ether')
           value = value.toString()+" POL"
         }
-
-
-        
         o.push({from:fromadd,to:toadd,date:date[0],time:date[1],value:value});
 
       }
@@ -625,8 +606,6 @@ app.get('/user', tokenauth, async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-
-
 
 app.use(express.static('public')); 
 
