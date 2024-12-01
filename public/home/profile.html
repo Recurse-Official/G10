@@ -19,34 +19,34 @@
   
 
     <div id="mySidebar" class="sidebar collapsed" onclick="toggleSidebar()">
-        <a href="/home" class="logo">
-            <i class='bx bx-code-alt'></i>
-            <div class="logo-name"><span>CampusCurrency</div>
+  <a href="/home" class="logo">
+      <i class='bx bx-code-alt'></i>
+      <div class="logo-name"><span>CampusCurrency</div>
+  </a>
+  <ul class="side-menu">
+      <li><a href="/home"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
+      <li class="active">
+          <a href="/profile">
+    <i class='bx bx-user-circle'></i>
+              <span class="text">Profile</span>
+          </a>
+      </li>
+      <li>
+          <a href="/connections">
+              <i class='bx bxs-doughnut-chart' ></i>
+              <span class="text">Transactions</span>
+          </a>
+      </li>
+  </ul>
+  <ul class="side-menu">
+    <li>
+        <a href="/logout" class="logout">
+          <i class='bx bx-power-off' ></i>
+            <span class="text">Logout</span>
         </a>
-        <ul class="side-menu">
-            <li><a href="/home"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
-            <li>
-                <a href="/profile">
-          <i class='bx bx-user-circle'></i>
-                    <span class="text">Profile</span>
-                </a>
-            </li>
-            <li>
-                <a href="/connections">
-                    <i class='bx bxs-doughnut-chart' ></i>
-                    <span class="text">Transactions</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="side-menu">
-          <li>
-              <a href="/logout" class="logout">
-                <i class='bx bx-power-off' ></i>
-                  <span class="text">Logout</span>
-              </a>
-          </li>
-        </ul>
-      </div>
+    </li>
+  </ul>
+</div>
 
 <div class="content sidebar-collapsed">
     <nav>
@@ -80,8 +80,8 @@
       <div class="header">
           <div class="left">
             <h1>
-              <p><li></i>Welcome
-              <a href="/profile"><span id="fname">Loading...</span> <span id="lname"></span></a>!</p>
+              <p><li class="welc"></i>Welcome
+              <a href="/profile" class="fullname"><span id="fname">Loading...</span> <span id="lname"></span></a>!</p>
             </li></h1>
                       <ul class="breadcrumb">
                           <li>
@@ -113,16 +113,12 @@
           </span>
         </li>
     </ul>
-
-
-          
-      </ul>
       
       <div class="bottom-data">
         <div class="orders">
             <div class="header">
-                <i class='bx bx-receipt'></i>
-                <h3>Details</h3>
+              <i class='bx bx-user-circle'></i>
+              <h3>Details</h3>
             </div>
             <table>
               <thead>
@@ -157,14 +153,13 @@
             
             
         </div>
-
-      
-      
-      <div class="main_content">
-        <div class="header"></div>  
-        <div class="info"><a href="/forgotpass"></i>Reset Password</a>
+        <div class="insights rp">
+          <div class="rp header"><a href="/forgotpass"><p class="rpname">Reset Password</p></a>
+        </div>
       </div>
-
+      
+      
+      
   </main>
 
 </div>
