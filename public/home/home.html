@@ -216,6 +216,7 @@
             if (event.origin === window.location.origin) {
                 const receiverName = event.data.receiverName; 
                 if (receiverName) {
+                    
                     window.location.href = `/payment?receiver=${encodeURIComponent(receiverName)}`;
                 }
             }

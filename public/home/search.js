@@ -11,9 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     searchInput.addEventListener("input", async function () {
         const query = this.value.trim();
-
         resultsList.innerHTML = "";
-
+        
         if (query.length < 2) {
             resultsContainer.classList.remove("show");
             return;
@@ -22,17 +21,16 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             resultsContainer.classList.add("show");
             resultsList.innerHTML = '<li class="loading">Searching...</li>';
-
-            const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
             
+            const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
+           
             if (!response.ok) {
                 throw new Error('Search failed');
             }
-            
+           
             const results = await response.json();
-
             resultsList.innerHTML = "";
-
+            
             if (results.length === 0) {
                 resultsList.innerHTML = '<li class="no-results">No results found</li>';
                 return;
@@ -41,23 +39,15 @@ document.addEventListener("DOMContentLoaded", function () {
             results.forEach((user) => {
                 const li = document.createElement("li");
                 li.textContent = `${user.fname} ${user.lname} (${user.rollno})`;
-                
+               
                 li.addEventListener("click", function () {
-                   
-                    const receiverInput = document.getElementById('receiver');
-                    if (receiverInput) {
-                        receiverInput.value = user.fname;
-                        receiverInput.setAttribute('data-address', user.address);
-                        receiverInput.setAttribute('data-selected', 'true');
-                    }
-                    
-                    
-                    resultsContainer.classList.remove("show");
+                    // Redirect to payment page with receiver's name as a query parameter
+                    window.location.href = `/payment?receiver=${encodeURIComponent(user.fname)}`;
                 });
-                
+               
                 resultsList.appendChild(li);
             });
-
+            
             resultsContainer.classList.add("show");
         } catch (error) {
             console.error("Search error:", error);
