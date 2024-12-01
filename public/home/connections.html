@@ -30,8 +30,8 @@
               <span class="text">Profile</span>
           </a>
       </li>
-      <li>
-          <a href="/connections">
+      <li class="active">
+            <a href="/connections">
               <i class='bx bxs-doughnut-chart' ></i>
               <span class="text">Transactions</span>
           </a>
@@ -49,7 +49,6 @@
 
 <div class="content sidebar-collapsed">
     <nav>
-      <i class='bx bx-menu'></i>
       <form action="#" style="position: relative;">
     <div class="form-input">
         <input type="search" id="searchInput" placeholder="Search...">
@@ -60,10 +59,7 @@
             <ul id="results"></ul>
         </div>
     </div>
-</form>
-      <a href="/connections" class="notif">
-          <i class='bx bx-bell'></i>
-      </a>      
+</form>    
       <a href="/qr-scanner">
         <button  id="scanQrBtn" class="qr-btn">
             <i class='bx bx-qr-scan'></i> Scan QR
@@ -79,8 +75,8 @@
       <div class="header">
           <div class="left">
             <h1>
-                <p><li></i>Welcome
-                <a href="/profile"><span id="fname">Loading...</span> <span id="lname"></span></a>!</p>
+                <p><li class="welc"></i>Welcome
+                <a href="/profile" class="fullname"><span id="fname">Loading...</span> <span id="lname"></span></a>!</p>
               </li></h1>
                       <ul class="breadcrumb">
                           <li>
@@ -118,8 +114,6 @@
               <div class="header">
                   <i class='bx bx-receipt'></i>
                   <h3>Recent Transactions</h3>
-                  <i class='bx bx-filter'></i>
-                  <i class='bx bx-search'></i>
               </div>
               <table>
                   <thead>
